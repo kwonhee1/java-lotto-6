@@ -58,4 +58,22 @@ class ApplicationTest extends NsTest {
     public void runMain() {
         Application.main(new String[]{});
     }
+
+    @Test
+    void 당첨번화와_보너스번호가_중복된_경우_테스트() {
+        runException("8000", "1,2,3,4,5,6", "6");
+        assertThat(output()).contains(ERROR_MESSAGE);
+    }
+
+    /*
+    1000j 입력
+    -> error
+    catch()
+    새로 입력 받기 시도
+     -> 다음 줄 입력이 없음  Console throw NoSuchElementException
+          Scanner().nextLine() : input 없으면 발생
+     -> 실행중인 Application.main 함수 끝
+     -> Console.colse();
+     -> test 끝
+     */
 }
