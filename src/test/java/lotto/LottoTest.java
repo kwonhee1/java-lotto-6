@@ -1,6 +1,7 @@
 package lotto;
 
-import lotto.model.Lotto;
+import lotto.model.lotto.Lotto;
+import lotto.model.machine.LottoResultType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
