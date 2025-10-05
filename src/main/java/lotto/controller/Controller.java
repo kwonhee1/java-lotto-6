@@ -1,10 +1,9 @@
 package lotto.controller;
 
-import lotto.DuplicationLottoNumberException;
-import lotto.IllegalPurchaseException;
+import lotto.model.lotto.excpetion.DuplicationLottoNumberException;
 import lotto.LottoResult;
-import lotto.model.Lotto;
-import lotto.model.LottoMachine;
+import lotto.model.lotto.Lotto;
+import lotto.model.machine.LottoMachine;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
@@ -13,7 +12,6 @@ import java.util.Arrays;
 public class Controller {
     private final InputView inputView;
     private final OutputView outputView;
-    private LottoMachine machine;
 
     public Controller() {
         inputView = new InputView();
@@ -25,22 +23,20 @@ public class Controller {
         int purchaseLottoCount = inputPurchaseLottoCount();
 
         // lotto machine 준비
-        machine = new LottoMachine(purchaseLottoCount);
+        LottoMachine machine = generateLottoMachine(purchaseLottoCount);
 
         // 발급된 lotto들 출력
-        outputView.purchaseResult(machine.getLottoCount());
-        outputView.generatedlottoes(LottoesToStr(machine.getGeneratedLottos()));
+        printGeneratedLottoesWithLottoMachine(machine);
 
         // 당첨 번호 입력
         Lotto winningLotto = inputWinningNumber();
         Integer bonusNumber = inputBonusNumber(winningLotto);
 
         // lotto 결과 생성
-        LottoResult result = machine.getResult(winningLotto, bonusNumber);
+        LottoResult result =getLottoResultFromMachine(machine, winningLotto, bonusNumber);
 
         // lotto 결과 출력
-        outputView.resultLotto(result.getResultStr());
-        outputView.resultRate(result.getWinningRate());
+        printLottoResult(result);
     }
 
     private Integer inputPurchaseLottoCount() {
@@ -54,6 +50,21 @@ public class Controller {
             outputView.printException(e);
             return inputPurchaseLottoCount();
         }
+    }
+
+    private LottoMachine generateLottoMachine(Integer lottoCount) {
+        return new LottoMachine(lottoCount);
+    }
+
+    private void printGeneratedLottoesWithLottoMachine(LottoMachine lottoMachine){
+        outputView.purchaseResult(lottoMachine.getLottoCount());
+        outputView.generatedlottoes(LottoesToStr(lottoMachine.getGeneratedLottos()));
+    }
+
+    private String LottoesToStr(Lotto[] generatedLottoes) {
+        StringBuilder builder = new StringBuilder();
+        Arrays.stream(generatedLottoes).forEach(l -> builder.append(l.toString()+"\n"));
+        return builder.toString();
     }
 
     private Lotto inputWinningNumber() {
@@ -77,9 +88,12 @@ public class Controller {
         }
     }
 
-    private String LottoesToStr(Lotto[] generatedLottoes) {
-        StringBuilder builder = new StringBuilder();
-        Arrays.stream(generatedLottoes).forEach(l -> builder.append(l.toString()+"\n"));
-        return builder.toString();
+    private LottoResult getLottoResultFromMachine(LottoMachine machine, Lotto winningLotto, Integer bonusNUmber) {
+        return machine.getResult(winningLotto, bonusNUmber);
+    }
+
+    private void printLottoResult(LottoResult result) {
+        outputView.resultLotto(result.getResultStr());
+        outputView.resultRate(result.getWinningRate());
     }
 }
