@@ -11,7 +11,7 @@ public class InputView {
         return Integer.parseInt(input);
     }
 
-    public java.util.List<Integer> winningNumber() {
+    public java.util.List<Integer> winningNumber() throws IllegalArgumentException {
         System.out.println(InputViewStr.WINNING_NUMBER.getMessage());
         String input = Console.readLine();
         return StringUtil.toIntegerList(input);
