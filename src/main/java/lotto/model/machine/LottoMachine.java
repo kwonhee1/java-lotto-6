@@ -5,6 +5,10 @@ import lotto.model.lotto.Lotto;
 import lotto.model.machine.dto.LottoResultDto;
 import lotto.model.machine.vo.WinningLotto;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 public class LottoMachine {
     private int lottoCount;
     private Lotto[] lottoes;
@@ -27,14 +31,15 @@ public class LottoMachine {
     }
 
     public LottoResultDto getResult(WinningLotto winningLotto) {
-        LottoResultDto result = new LottoResultDto(lottoCount);
+        Map<LottoResultType, Integer> resultMap = new HashMap<>();
+        Arrays.stream(LottoResultType.values()).forEach(resultType -> resultMap.put(resultType, 0));
+
         for (Lotto eachLotto : lottoes) {
-            result.addResult(eachLotto.getResult(winningLotto.getWinningLotto(), winningLotto.getBonusNumber()));
+            LottoResultType resultType = eachLotto.getResult(winningLotto.getWinningLotto(), winningLotto.getBonusNumber());
+            resultMap.put(resultType, resultMap.get(resultType)+1);
         }
-        return result;
+        return new LottoResultDto(lottoCount, resultMap);
     }
-    // 차라리 builder class를 두어서라도 dto의 불변을 유지하자
-    // map변수를 두고 LottoResult에게 생성자로 넘겨주는 것! -> 이게 제일 자연스러워 보임
 
     public int getLottoCount() { return lottoCount; }
 

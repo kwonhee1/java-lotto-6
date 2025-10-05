@@ -10,17 +10,9 @@ public class LottoResultDto {
     private int totalCount;
     private Map<LottoResultType, Integer> resultMap;
 
-    public LottoResultDto(int totalCount) {
+    public LottoResultDto(int totalCount, Map<LottoResultType, Integer> resultMap) {
         this.totalCount = totalCount;
-        resultMap = new HashMap<>();
-        Arrays.stream(LottoResultType.values()).forEach(resultType -> resultMap.put(resultType, 0));
-    }
-
-    public void addResult(LottoResultType resultType) {
-        if(resultType.equals(LottoResultType.NO_RESULT))
-            return;
-
-        resultMap.put(resultType, resultMap.get(resultType) + 1);
+        this.resultMap = resultMap;
     }
 
     public double getWinningRate() {
