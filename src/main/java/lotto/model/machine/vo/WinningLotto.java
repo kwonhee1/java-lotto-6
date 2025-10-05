@@ -1,8 +1,8 @@
 package lotto.model.machine.vo;
 
+import lotto.model.common.validator.LottoNumberValidator;
 import lotto.model.lotto.Lotto;
 import lotto.model.lotto.excpetion.DuplicationLottoNumberException;
-import lotto.model.lotto.excpetion.IllegalRangeLottoException;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class WinningLotto {
     public WinningLotto(List<Integer> winningNumbers, Integer bonusNumber) {
         winningLotto = new Lotto(winningNumbers);
 
-        validateBonusNumberRange(bonusNumber);
+        LottoNumberValidator.validateLottoNumberRange(bonusNumber);
         validateWinningLottoContainsBonusNumber(winningLotto, bonusNumber);
 
         this.bonusNumber = bonusNumber;
@@ -22,11 +22,6 @@ public class WinningLotto {
     private void validateWinningLottoContainsBonusNumber(Lotto winningLotto, Integer bonusNumber) {
         if(winningLotto.isContainNumber(bonusNumber))
             throw new DuplicationLottoNumberException();
-    }
-
-    private void validateBonusNumberRange(Integer bonusNumber) {
-        if(!(0 < bonusNumber && bonusNumber <= 45))
-            throw new IllegalRangeLottoException();
     }
 
     public Lotto getWinningLotto() { return winningLotto; }

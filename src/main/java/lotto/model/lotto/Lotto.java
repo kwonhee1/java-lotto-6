@@ -1,8 +1,8 @@
 package lotto.model.lotto;
 
+import lotto.model.common.validator.LottoNumberValidator;
 import lotto.model.lotto.excpetion.DuplicationLottoNumberException;
 import lotto.model.lotto.excpetion.IllegalLengthLottoException;
-import lotto.model.lotto.excpetion.IllegalRangeLottoException;
 import lotto.model.machine.LottoResultType;
 
 import java.util.List;
@@ -13,20 +13,13 @@ public class Lotto {
     public Lotto(List<Integer> lottoNumbers) {
         validateLength(lottoNumbers);
         validateDuplication(lottoNumbers);
-        validateLottoNumberRange(lottoNumbers);
+        LottoNumberValidator.validateLottoNumbersRange(lottoNumbers);
         this.lottoNumbers = lottoNumbers;
     }
 
     private void validateLength(List<Integer> numbers) {
         if (numbers.size() != 6) {
             throw new IllegalLengthLottoException();
-        }
-    }
-
-    private void validateLottoNumberRange(List<Integer> numbers) {
-        for(Integer number : numbers) {
-            if(!(0 < number && number <= 45))
-                throw new IllegalRangeLottoException();
         }
     }
 
