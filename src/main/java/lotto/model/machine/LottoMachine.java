@@ -3,6 +3,7 @@ package lotto.model.machine;
 import camp.nextstep.edu.missionutils.Randoms;
 import lotto.LottoResult;
 import lotto.model.lotto.Lotto;
+import lotto.model.machine.vo.WinningLotto;
 
 public class LottoMachine {
     private int lottoCount;
@@ -25,10 +26,10 @@ public class LottoMachine {
         return lottoes;
     }
 
-    public LottoResult getResult(Lotto winning, int bonus) {
+    public LottoResult getResult(WinningLotto winningLotto) {
         LottoResult result = new LottoResult(lottoCount);
         for (Lotto eachLotto : lottoes) {
-            result.addResult(eachLotto.getResult(winning, bonus));
+            result.addResult(eachLotto.getResult(winningLotto.getWinningLotto(), winningLotto.getBonusNumber()));
         }
         return result;
     }

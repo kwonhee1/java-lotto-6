@@ -4,10 +4,12 @@ import lotto.model.lotto.excpetion.DuplicationLottoNumberException;
 import lotto.LottoResult;
 import lotto.model.lotto.Lotto;
 import lotto.model.machine.LottoMachine;
+import lotto.model.machine.vo.WinningLotto;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Controller {
     private final InputView inputView;
@@ -29,11 +31,11 @@ public class Controller {
         printGeneratedLottoesWithLottoMachine(machine);
 
         // 당첨 번호 입력
-        Lotto winningLotto = inputWinningNumber();
-        Integer bonusNumber = inputBonusNumber(winningLotto);
+        // winning lotto numbers, bonus number 입력을 한가지 작업으로 고려함
+        WinningLotto winningLotto = inputWinningLottoAndBonusNumber();
 
         // lotto 결과 생성
-        LottoResult result =getLottoResultFromMachine(machine, winningLotto, bonusNumber);
+        LottoResult result =getLottoResultFromMachine(machine, winningLotto);
 
         // lotto 결과 출력
         printLottoResult(result);
@@ -67,29 +69,19 @@ public class Controller {
         return builder.toString();
     }
 
-    private Lotto inputWinningNumber() {
+    private WinningLotto inputWinningLottoAndBonusNumber() {
         try {
-            return new Lotto(inputView.winningNumber()); // "1 2 3" -> Lotto
-        } catch(IllegalArgumentException e) {
-            outputView.printException(e);
-            return inputWinningNumber();
-        }
-    }
-
-    private Integer inputBonusNumber(Lotto winningLotto) {
-        try {
+            List<Integer> winningNumbers = inputView.winningNumber();
             Integer bonusNumber = inputView.bonusNumber();
-            if (winningLotto.isContainNumber(bonusNumber))
-                throw new DuplicationLottoNumberException();
-            return bonusNumber;
-        } catch (IllegalArgumentException e) {
+            return new WinningLotto(winningNumbers, bonusNumber);
+        } catch (IllegalArgumentException e){
             outputView.printException(e);
-            return inputBonusNumber(winningLotto);
+            return inputWinningLottoAndBonusNumber();
         }
     }
 
-    private LottoResult getLottoResultFromMachine(LottoMachine machine, Lotto winningLotto, Integer bonusNUmber) {
-        return machine.getResult(winningLotto, bonusNUmber);
+    private LottoResult getLottoResultFromMachine(LottoMachine machine, WinningLotto winningLotto) {
+        return machine.getResult(winningLotto);
     }
 
     private void printLottoResult(LottoResult result) {
