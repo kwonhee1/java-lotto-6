@@ -1,14 +1,16 @@
-package lotto;
+package lotto.model.machine.dto;
+
+import lotto.model.machine.LottoResultType;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LottoResult {
+public class LottoResultDto {
     private int totalCount;
     private Map<LottoResultType, Integer> resultMap;
 
-    public LottoResult(int totalCount) {
+    public LottoResultDto(int totalCount) {
         this.totalCount = totalCount;
         resultMap = new HashMap<>();
         Arrays.stream(LottoResultType.values()).forEach(resultType -> resultMap.put(resultType, 0));

@@ -1,4 +1,4 @@
-package lotto;
+package lotto.model.machine;
 
 public enum LottoResultType {
     SIX("6개 일치 (%,d원)", 2000000000L),

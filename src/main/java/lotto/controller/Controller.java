@@ -1,7 +1,6 @@
 package lotto.controller;
 
-import lotto.model.lotto.excpetion.DuplicationLottoNumberException;
-import lotto.LottoResult;
+import lotto.model.machine.dto.LottoResultDto;
 import lotto.model.lotto.Lotto;
 import lotto.model.machine.LottoMachine;
 import lotto.model.machine.vo.WinningLotto;
@@ -35,7 +34,7 @@ public class Controller {
         WinningLotto winningLotto = inputWinningLottoAndBonusNumber();
 
         // lotto 결과 생성
-        LottoResult result =getLottoResultFromMachine(machine, winningLotto);
+        LottoResultDto result =getLottoResultFromMachine(machine, winningLotto);
 
         // lotto 결과 출력
         printLottoResult(result);
@@ -80,11 +79,11 @@ public class Controller {
         }
     }
 
-    private LottoResult getLottoResultFromMachine(LottoMachine machine, WinningLotto winningLotto) {
+    private LottoResultDto getLottoResultFromMachine(LottoMachine machine, WinningLotto winningLotto) {
         return machine.getResult(winningLotto);
     }
 
-    private void printLottoResult(LottoResult result) {
+    private void printLottoResult(LottoResultDto result) {
         outputView.resultLotto(result.getResultStr());
         outputView.resultRate(result.getWinningRate());
     }

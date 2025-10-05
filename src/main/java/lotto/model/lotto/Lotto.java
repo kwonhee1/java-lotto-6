@@ -3,7 +3,7 @@ package lotto.model.lotto;
 import lotto.model.lotto.excpetion.DuplicationLottoNumberException;
 import lotto.model.lotto.excpetion.IllegalLengthLottoException;
 import lotto.model.lotto.excpetion.IllegalRangeLottoException;
-import lotto.LottoResultType;
+import lotto.model.machine.LottoResultType;
 
 import java.util.List;
 

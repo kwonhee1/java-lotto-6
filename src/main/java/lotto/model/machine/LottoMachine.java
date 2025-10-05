@@ -1,8 +1,8 @@
 package lotto.model.machine;
 
 import camp.nextstep.edu.missionutils.Randoms;
-import lotto.LottoResult;
 import lotto.model.lotto.Lotto;
+import lotto.model.machine.dto.LottoResultDto;
 import lotto.model.machine.vo.WinningLotto;
 
 public class LottoMachine {
@@ -26,8 +26,8 @@ public class LottoMachine {
         return lottoes;
     }
 
-    public LottoResult getResult(WinningLotto winningLotto) {
-        LottoResult result = new LottoResult(lottoCount);
+    public LottoResultDto getResult(WinningLotto winningLotto) {
+        LottoResultDto result = new LottoResultDto(lottoCount);
         for (Lotto eachLotto : lottoes) {
             result.addResult(eachLotto.getResult(winningLotto.getWinningLotto(), winningLotto.getBonusNumber()));
         }
