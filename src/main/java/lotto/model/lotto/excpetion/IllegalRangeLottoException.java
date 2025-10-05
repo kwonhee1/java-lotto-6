@@ -1,4 +1,6 @@
-package lotto;
+package lotto.model.lotto.excpetion;
+
+import lotto.model.common.LottoException;
 
 public class IllegalRangeLottoException extends LottoException {
     private static final String message = "lotto number must be between 1 and 45";

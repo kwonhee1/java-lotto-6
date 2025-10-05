@@ -1,7 +1,8 @@
-package lotto.model;
+package lotto.model.machine;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import lotto.LottoResult;
+import lotto.model.lotto.Lotto;
 
 public class LottoMachine {
     private int lottoCount;
@@ -31,6 +32,8 @@ public class LottoMachine {
         }
         return result;
     }
+    // 차라리 builder class를 두어서라도 dto의 불변을 유지하자
+    // map변수를 두고 LottoResult에게 생성자로 넘겨주는 것! -> 이게 제일 자연스러워 보임
 
     public int getLottoCount() { return lottoCount; }
 

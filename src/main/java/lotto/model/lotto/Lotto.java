@@ -1,8 +1,8 @@
-package lotto.model;
+package lotto.model.lotto;
 
-import lotto.DuplicationLottoNumberException;
-import lotto.IllegalLengthLottoException;
-import lotto.IllegalRangeLottoException;
+import lotto.model.lotto.excpetion.DuplicationLottoNumberException;
+import lotto.model.lotto.excpetion.IllegalLengthLottoException;
+import lotto.model.lotto.excpetion.IllegalRangeLottoException;
 import lotto.LottoResultType;
 
 import java.util.List;
